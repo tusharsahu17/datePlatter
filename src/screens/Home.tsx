@@ -7,10 +7,34 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-
+import Graph from './Graph';
 import React, {useEffect, useState} from 'react';
+import {PieChart} from 'react-native-chart-kit-chz';
 
 const Home = () => {
+  const chartData = [
+    {
+      key: 1,
+      value: 100,
+      svg: {fill: 'orange'},
+      arc: {cornerRadius: 0},
+      label: 'Cplex',
+    },
+    {
+      key: 2,
+      value: 260,
+      svg: {fill: 'lightblue'},
+      arc: {cornerRadius: 0},
+      label: 'Jsum',
+    },
+    {
+      key: 3,
+      value: 158,
+      svg: {fill: 'red'},
+      arc: {cornerRadius: 0},
+      label: 'Jsum',
+    },
+  ];
   return (
     <ScrollView>
       <View style={styles.mainContainer}>
@@ -31,8 +55,52 @@ const Home = () => {
           <Text style={styles.stripeText}>Team</Text>
         </View>
       </View>
-      <View style={styles.graphContainer}></View>
-      <View style={styles.graphContainer}></View>
+      <Graph chartData={chartData} />
+      <View style={styles.graphContainer}>
+        <View style={styles.pieText}>
+          <View>
+            <Text
+              style={[
+                styles.stripeText,
+                styles.marginLefts,
+                styles.marginTops,
+              ]}>
+              Order
+            </Text>
+          </View>
+          <View style={[styles.pieText, styles.filterView]}>
+            <Text style={[styles.marginTops]}>
+              Oct
+              <Text
+                style={[
+                  styles.stripeText,
+                  styles.marginLefts,
+                  styles.marginTops,
+                ]}>
+                {'    '} V
+              </Text>
+            </Text>
+            <Text style={[styles.piefilterView]}> ...</Text>
+          </View>
+        </View>
+        <View style={styles.pieText}>
+          <PieChart
+            style={{width: 250, height: 260}}
+            items={chartData}
+            innerRadius={75}
+            outerRadius={105}
+            padAngle={0}
+          />
+          <View style={styles.piePercentage}>
+            <Text style={[styles.percentageText]}>* 52.4%</Text>
+            <Text style={styles.marginLefts}>Delivered</Text>
+            <Text style={[styles.percentageText]}>* 16.4%</Text>
+            <Text style={styles.marginLefts}>Transit</Text>
+            <Text style={[styles.percentageText]}>* 31.2%</Text>
+            <Text style={styles.marginLefts}>Orders</Text>
+          </View>
+        </View>
+      </View>
     </ScrollView>
   );
 };
@@ -88,12 +156,35 @@ const styles = StyleSheet.create({
   },
   graphContainer: {
     width: 380,
-    height: 250,
-    borderWidth: 1,
+    height: 300,
     marginTop: 8,
-    borderColor: 'black',
     backgroundColor: 'white',
     borderRadius: 10,
     alignSelf: 'center',
+  },
+  marginLefts: {
+    marginLeft: 20,
+  },
+  marginTops: {
+    paddingTop: 20,
+  },
+  pieText: {
+    flexDirection: 'row',
+  },
+  piePercentage: {
+    marginTop: 40,
+    flexDirection: 'column',
+  },
+  percentageText: {
+    fontSize: 30,
+    color: 'black',
+    fontWeight: '500',
+  },
+  filterView: {
+    marginLeft: 200,
+  },
+  piefilterView: {
+    fontSize: 30,
+    marginLeft: 20,
   },
 });
