@@ -7,10 +7,12 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import Graph from './Graph';
-import React, {useEffect, useState} from 'react';
-import {PieChart} from 'react-native-chart-kit-chz';
 
+import React, {useEffect, useState} from 'react';
+import {PieChart, LineChart} from 'react-native-chart-kit-chz';
+import {Dimensions} from 'react-native';
+import Graph from './Graph';
+const screenWidth = Dimensions.get('window').width;
 const Home = () => {
   const chartData = [
     {
@@ -22,7 +24,7 @@ const Home = () => {
     },
     {
       key: 2,
-      value: 260,
+      value: 178,
       svg: {fill: 'lightblue'},
       arc: {cornerRadius: 0},
       label: 'Jsum',
@@ -35,6 +37,7 @@ const Home = () => {
       label: 'Jsum',
     },
   ];
+
   return (
     <ScrollView>
       <View style={styles.mainContainer}>
@@ -55,37 +58,61 @@ const Home = () => {
           <Text style={styles.stripeText}>Team</Text>
         </View>
       </View>
-      <Graph chartData={chartData} />
-      <View style={styles.graphContainer}>
+      <Graph pieChart={false} chartData={chartData} />
+      <Graph pieChart={true} chartData={chartData} />
+      {/* <View style={styles.graphContainer}>
         <View style={styles.pieText}>
           <View>
-            <Text
-              style={[
-                styles.stripeText,
-                styles.marginLefts,
-                styles.marginTops,
-              ]}>
-              Order
-            </Text>
+            <Text style={[styles.stripeText, styles.marginLefts]}>Order</Text>
           </View>
           <View style={[styles.pieText, styles.filterView]}>
-            <Text style={[styles.marginTops]}>
-              Oct
-              <Text
-                style={[
-                  styles.stripeText,
-                  styles.marginLefts,
-                  styles.marginTops,
-                ]}>
-                {'    '} V
-              </Text>
-            </Text>
-            <Text style={[styles.piefilterView]}> ...</Text>
+            <Text style={[styles.stripeText, styles.marginLefts]}>Oct </Text>
+            <Text style={[styles.piefilterView]}>...</Text>
+          </View>
+        </View>
+        <LineChart
+          data={{
+            labels: [
+              'week 1',
+              'week 2',
+              'week 3',
+              'week 4',
+              'week 5',
+              'week 6',
+            ], // Bottom Labels
+            datasets: [
+              {
+                data: ['0', '10', '30', '20', '14', '23'], // Data for Chart
+                amount: ['0', '10', '30', '20', '14', 23], //Amount show on the ToolTip
+                color: '#000531', // Chart Line Color
+                currency: 'IND', //Currency to show before amount ,
+              },
+              //You can add another set here with different data
+            ],
+          }}
+          onPointPress={(d: any) => {}}
+          selectedDotColor="#000"
+          width={350}
+          height={200}
+          chartConfig={{
+            decimalPlaces: 0,
+          }}
+          bezier //Command this for stright line chart
+        />
+      </View> */}
+      {/* <View style={styles.graphContainer}>
+        <View style={styles.pieText}>
+          <View>
+            <Text style={[styles.stripeText, styles.marginLefts]}>Order</Text>
+          </View>
+          <View style={[styles.pieText, styles.filterView]}>
+            <Text style={[styles.stripeText, styles.marginLefts]}>Oct </Text>
+            <Text style={[styles.piefilterView]}>...</Text>
           </View>
         </View>
         <View style={styles.pieText}>
           <PieChart
-            style={{width: 250, height: 260}}
+            style={{width: 250, height: 290}}
             items={chartData}
             innerRadius={75}
             outerRadius={105}
@@ -100,7 +127,7 @@ const Home = () => {
             <Text style={styles.marginLefts}>Orders</Text>
           </View>
         </View>
-      </View>
+      </View> */}
     </ScrollView>
   );
 };
@@ -157,16 +184,16 @@ const styles = StyleSheet.create({
   graphContainer: {
     width: 380,
     height: 300,
+    borderWidth: 1,
     marginTop: 8,
+    borderColor: 'black',
     backgroundColor: 'white',
     borderRadius: 10,
     alignSelf: 'center',
   },
   marginLefts: {
     marginLeft: 20,
-  },
-  marginTops: {
-    paddingTop: 20,
+    paddingBottom: 5,
   },
   pieText: {
     flexDirection: 'row',
@@ -181,7 +208,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   filterView: {
-    marginLeft: 200,
+    marginLeft: 230,
   },
   piefilterView: {
     fontSize: 30,
