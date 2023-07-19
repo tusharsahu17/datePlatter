@@ -1,10 +1,13 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
+import {useContext} from 'react';
 import React from 'react';
+import {MyContext} from './../MyContext';
 
 const Notification = () => {
+  const {text, setText} = useContext(MyContext);
   return (
     <View>
-      <Text style={styles.screenText}>Notification</Text>
+      <Text style={styles.screenText}>{text}</Text>
       <Image
         style={styles.profilePic}
         source={require('./../assets/bell.png')}
